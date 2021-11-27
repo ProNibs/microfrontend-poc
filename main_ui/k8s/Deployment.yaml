@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: wedding-frontend-deployment
+spec:
+  selector:
+    matchLabels:
+      app: wedding-frontend
+  template:
+    metadata:
+      labels:
+        app: wedding-frontend
+    spec:
+      containers:
+      - name: wedding-frontend
+        image: wedding-front
+        imagePullPolicy: IfNotPresent
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 3000
+        env:
+          - name: REACT_APP_ABOUT_US_HOST
+            value: http://localhost/aboutus

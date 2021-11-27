@@ -1,0 +1,19 @@
+
+
+FROM node:latest as nodebuild
+WORKDIR /app
+# Copy package.json so npm install isn't re-ran on every code change
+COPY javascript_src/package.json .
+RUN npm install
+COPY javascript_src .
+RUN npm run build
+# Once done, aboutus.js will be made at /app/dist
+
+
+FROM golang:latest as prod
+WORKDIR /app
+COPY --from=build /app/main /app
+#COPY --from=nodebuild /app/dist/ static/
+COPY static/ static
+EXPOSE 8080
+CMD [ "/app/main" ]

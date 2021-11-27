@@ -1,0 +1,23 @@
+<html>
+    <head>
+        <title>Simple Website</title>
+    </head>
+    <body>
+        <div id="root"></div>
+        <script crossorigin>
+            var host = 'https://jsonplaceholder.typicode.com/posts/1'
+            fetch(host, {
+                    mode:'cors',
+                    headers: {
+                        'Access-Control-Allow-Origin':'*'
+                    }
+                })
+                .then(response => response.text()) //extract text from the http response body
+                .then(data => {
+                    var main_div = document.getElementById('root');
+                    //main_div.innerHTML += JSON.stringify(data);
+                    main_div.innerHTML += data;
+                })
+        </script>
+    </body>
+</html>

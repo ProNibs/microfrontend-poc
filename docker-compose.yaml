@@ -1,0 +1,36 @@
+version: '3'
+services:
+    reactnode:
+        build: ./main_ui
+        environment:
+            - REACT_APP_ABOUT_US_HOST=http://localhost:8081
+            - REACT_APP_GUESTS_HOST=http://localhost:8080
+            - FAST_REFRESH=false
+        ports:
+            - 3000:3000
+        networks:
+            - wedding-net
+        volumes:
+            - main_ui_node_modules:/app/node_modules
+
+    aboutusgo:
+        build: ./about_us_go
+        ports:
+            - 8081:8080
+        networks:
+            - wedding-net
+    guests:
+        build: ./guests
+        environment:
+            ADMIN_USERNAME: user
+            ADMIN_PASSWORD: password
+        ports:
+            - 8080:8080
+
+
+
+networks:
+    wedding-net:
+
+volumes:
+    main_ui_node_modules:
